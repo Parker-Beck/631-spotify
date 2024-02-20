@@ -1,0 +1,15 @@
+First, run in terminal:
+
+export SPOTIPY_CLIENT_ID='ee31bafc26514072996d72e1b8387059'
+export SPOTIPY_CLIENT_SECRET='5f561d59dcb14de7806bf2480cd7e8f6'
+
+OR
+
+export SPOTIPY_CLIENT_ID='5a84a4d59bb74cd8851f2c8796fd0d58'
+export SPOTIPY_CLIENT_SECRET='bb792f367e314bfbad67f8fb1891a241'
+
+Usage:
+python Scraping.py [# Songs to write] [Artist ID] [Artist ID] [Artist ID]... 
+
+# Search 5000 songs starting at Taylor Swift
+python Scraping.py 5000 06HL4z0CvFAxyc27GXpf02
