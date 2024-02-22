@@ -13,3 +13,6 @@ python Scraping.py [# Songs to write] [Artist ID] [Artist ID] [Artist ID]...
 
 # Search 5000 songs starting at Taylor Swift
 python Scraping.py 5000 06HL4z0CvFAxyc27GXpf02
+
+If the scraping terminates non-gracefully for any reason, you can run parsed_songs.py
+to parse artists from the data folder rather than relying on seen_artists.txt

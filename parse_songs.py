@@ -13,7 +13,7 @@ def main():
         except:
             print("Failed on song: " + filename)
     
-    with open("parsed_seen_artists.txt", "w", encoding="utf-8") as f:
+    with open("seen_artists.txt", "w", encoding="utf-8") as f:
         f.write(str(seen_artists))
         print("Wrote " + str(len(seen_artists)) + " artists to disk")
         f.close()

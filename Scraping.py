@@ -94,7 +94,7 @@ def find_related_artists(artist_id: str):
         related_artists.add(artist["id"].strip())
     return related_artists
 
-def exit(seen_artists: set, new_artists: set):
+def exit(seen_artists: set, new_artists: set, songs_written: int):
     
     with open("seen_artists.txt", "w", encoding="utf-8") as f:
         f.write(str(seen_artists))
@@ -128,7 +128,7 @@ def main():
             
         seen_artists.add(cur_artist)
     
-    exit(seen_artists, new_artists)
+    exit(seen_artists, new_artists, songs_written)
 
 
 if __name__ == "__main__":
