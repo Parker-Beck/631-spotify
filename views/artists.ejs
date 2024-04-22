@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+<style>
+    .clickable-card {
+        cursor: pointer;
+    }
+    .clickable-card.selected {
+        box-shadow: 0 0 15px #007bff; 
+        border-color: #007bff; 
+    }
+</style>
+
+<body>
+    <div class="jumbotron centered">
+        <div class="container mt-5">
+            <h1 class="display-3">Top Artists</h1>
+            <hr>
+            <form action="/artist_selections" method="POST">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <% artists.forEach(function(artist) { %>
+                        <div class="card mb-4 clickable-card" style="flex: 0 0 19%;" data-artist-id="<%= artist.id %>" data-artist-name="<%= artist.name %>">
+                            <img src="<%= artist.imageUrl %>" class="card-img-top" alt="<%= artist.name %>" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= artist.name %></h5>
+                                <input type="hidden" name="selectedArtists" value=""> 
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <button type="submit" class="btn btn-primary mt-4">Submit Selections</button>
+            </form>
+            
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = document.querySelectorAll('.clickable-card');
+        cards.forEach(card => {
+            card.addEventListener('click', function () {
+                card.classList.toggle('selected'); 
+                const input = card.querySelector('input[type="hidden"]');
+                if (card.classList.contains('selected')) {
+                    input.value = card.getAttribute('data-artist-id');
+                } else {
+                    input.value = ''; 
+                }
+            });
+        });
+    });
+</script>
+
+<%- include('partials/footer') %>

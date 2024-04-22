@@ -1,0 +1,155 @@
+
+<%- include('partials/header') %>
+<style>
+    .clickable-card {
+        cursor: pointer;
+        border-radius: 50%;
+        width: 150px; 
+        height: 150px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        border: 2px solid transparent; 
+    }
+    .clickable-card:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 0 20px rgba(0, 123, 255, 0.75); 
+    }
+    .clickable-card.selected {
+        box-shadow: 0 0 15px #007bff; 
+        border: 2px solid #007bff; 
+    }
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%; 
+        height: 100%; 
+    }
+    .slider-container {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+    }
+    .range-slider {
+        width: 60%; 
+    }
+    /* the slider base */
+    .noUi-base {
+        background-color: #f3f3f3;
+    }
+
+    /* the slider connect bar (the part between the handle and the start or between handles) */
+    .noUi-connect {
+        background-color: #3092fa; 
+    }
+
+    /* the slider handles */
+    .noUi-handle {
+        /* border-radius: 90%; */
+        background-color: #f3f3f3; 
+        border: 1.5px solid #3092fa; /* border around the handle */
+        box-shadow: 0 0 3px rgba(0, 123, 255, 0.5); 
+        width: 24px;  
+        height: 24px; 
+        top: -10px;  
+        cursor: pointer; 
+    }
+
+    /* for when the handle is active or being dragged */
+    .noUi-active {
+        box-shadow: 0 0 16px rgba(0, 123, 255, 0.75); 
+    }
+</style>
+
+
+<body>
+    <div class="jumbotron centered">
+        <div class="container mt-5">
+            <h1 class="display-3">Top Genres</h1>
+            <hr>
+
+            <form action="/feature_selections" method="POST">
+                <div class="d-flex flex-wrap justify-content-center">
+                    <% genres.forEach(function(genre) { %>
+                        <div class="card mb-4 clickable-card" data-genre="<%= genre %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= genre %></h5>
+                                <input type="hidden" name="selectedGenres" value="">
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+                <% let features = ['danceability', 'energy', 'loudness', 'mode', 'acousticness', 'instrumentalness', 'tempo', 'valence']; %>
+                <% features.forEach(function(feature) { %>
+                <div class="slider-container">
+                    <label for="<%= feature %>Range"><%= feature.charAt(0).toUpperCase() + feature.slice(1) %></label>
+                    <div id="<%= feature %>Range" class="range-slider"></div>
+                    <input type="hidden" name="<%= feature %>-min" id="<%= feature %>-min">
+                    <input type="hidden" name="<%= feature %>-max" id="<%= feature %>-max">
+                </div>
+                <% }) %>
+
+                <button type="submit" class="btn btn-primary mt-4">Submit Preferences</button>
+        
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.querySelectorAll('.clickable-card').forEach(card => {
+            card.addEventListener('click', function() {
+                card.classList.toggle('selected');
+                const input = card.querySelector('input[type="hidden"]');
+                input.value = card.classList.contains('selected') ? card.getAttribute('data-genre') : '';
+            });
+        });
+
+        <% features.forEach(function(feature) { %>
+            <% if (feature == 'mode') { %>
+                noUiSlider.create(document.getElementById('<%= feature %>Range'), {
+                start: [0],
+                connect: [true, false],
+                step: 1,
+                range: {
+                    'min': 0,
+                    'max': 1
+                },
+                pips: {
+                    mode: 'steps',
+                    density: 100
+                }
+            }).on('update', function(values, handle) {
+                var value = Math.round(values[handle]);
+                document.getElementById('mode-min').value = value;
+                document.getElementById('mode-max').value = value;
+            });
+                <% } else { %>
+                noUiSlider.create(document.getElementById('<%= feature %>Range'), {
+                start: [0.1, 0.9], 
+                connect: true,
+                range: {
+                    'min': 0,
+                    'max': 1
+                }
+                }).on('update', function(values, handle) {
+                    document.getElementById('<%= feature %>-min').value = values[0];
+                    document.getElementById('<%= feature %>-max').value = values[1];
+                });
+                    <% } %>
+
+
+
+        <% }) %>
+
+        
+    </script>
+<%- include('partials/footer') %>

@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<body>
+
+    <div class="jumbotron centered">
+        <div class="container">
+            <h1 class="display-3">Playlist created successfully!</h1>
+            <hr>
+            <p class="lead"> <strong>Playlist Name:</strong> <%= playlist.name %> </p>
+            <p class="lead"><strong>Playlist Length:</strong> <%= playlist.size %> songs</p>
+            <p class="lead"><strong>Description:</strong> <%= playlist.description %></p>
+            <a class="btn btn-primary" href="<%= playlist.link %>" target="_blank">Open Playlist in Spotify</a>            
+            <hr>
+        </div>
+    </div>
+
+
+<%- include('partials/footer') %>

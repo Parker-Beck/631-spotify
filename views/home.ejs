@@ -1,0 +1,152 @@
+<%- include('partials/header') %>
+
+<style>
+  .time-range-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px; 
+    margin-top: 30px;
+  }
+
+  .time-range-card {
+    width: 180px; 
+    height: 180px; 
+    background-color: white; 
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+
+  .time-range-link {
+    color: black;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 20px;
+    text-decoration: none; 
+    padding: 10px;
+    display: block;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .time-range-link:hover,
+  .time-range-link:focus {
+    text-decoration: none; 
+  }
+
+  .time-range-card:hover, .time-range-card:focus-within {
+    transform: scale(1.05); 
+    box-shadow: 0 0 15px #007bff; 
+    cursor: pointer;
+  }
+
+  .time-range-card input[type="radio"]:checked + .time-range-link {
+    border-color: #007bff; 
+    box-shadow: 0 0 15px #007bff; 
+  }
+
+  .input-row {
+    margin-top: 20px;
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%; 
+    margin-bottom: 30px;
+  }
+
+  .input-group {
+    flex: 1; 
+    padding: 0 10px; 
+    display: flex;
+    flex-direction: column; 
+  }
+
+  .form-control {
+    width: 100%; 
+  }
+
+  .button-container {
+    display: flex; 
+    justify-content: center; 
+    padding: 20px; 
+  }
+
+  .btn {
+    font-size: 18px; 
+  }
+
+  label {
+    font-size: 16px;
+  }
+
+</style>
+
+<body>
+
+<div class="jumbotron centered">
+  <div class="container">
+    <h1 class="display-3">Welcome!</h1>
+    <p class="lead">Generate your own mood playlist with us.</p>
+    <hr>
+    <form action="/initial_selections" method="POST">
+
+      <h2 class="lead" style="text-align: center; ">Please choose the time range across which you want us to fetch your top artists.</h2>
+      
+      <div class="time-range-cards">
+        <label class="time-range-card">
+          <input type="radio" name="timeRange" value="short" hidden required>
+          <div class="time-range-link">
+            <div class="time-range-title">Short-Term</div>
+            <div class="time-range-subtitle">(4 weeks)</div>
+          </div>
+        </label>
+        <label class="time-range-card">
+          <input type="radio" name="timeRange" value="medium" hidden required>
+          <div class="time-range-link">
+            <div class="time-range-title">Medium-Term</div>
+            <div class="time-range-subtitle">(6 months)</div>
+          </div>
+        </label>
+        <label class="time-range-card">
+          <input type="radio" name="timeRange" value="long" hidden required>
+          <div class="time-range-link">
+            <div class="time-range-title">Long-Term</div>
+            <div class="time-range-subtitle">(1 year)</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="playlistName">Enter Playlist Name*:</label>
+          <input type="text" class="form-control" placeholder="Enter playlist name" value="My Playlist" name="playlistName" style="width:100%; border-radius:4px;" required>
+        </div>
+        <div class="input-group">
+          <label for="playlistSize">Enter Playlist Length*:</label>
+          <input type="number" class="form-control" placeholder="Number of songs" value="50" name="playlistSize" min="1" style="width:100%; border-radius:4px;" required>
+        </div>
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <label for="playlistDesc">Enter Playlist Description:</label>
+          <input type="text" class="form-control" placeholder="" value="" name="playlistDesc" style="width:100%; border-radius:4px;">
+        </div>
+      </div>
+      
+      
+
+      <div class="button-container">
+        <button type="submit" class="btn btn-primary">Next</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
